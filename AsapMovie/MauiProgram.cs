@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AsapMovie.Methods_and_Models;
+using AsapMovie.Pages;
+using Microsoft.Extensions.Logging;
 
 namespace AsapMovie ;
 
@@ -14,6 +16,9 @@ namespace AsapMovie ;
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+                
+            builder.Services.AddSingleton<DbContext>();
+            builder.Services.AddTransient<InitialPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
