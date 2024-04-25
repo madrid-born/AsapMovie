@@ -1,4 +1,6 @@
-﻿namespace AsapMovie ;
+﻿using AsapMovie.Pages;
+
+namespace AsapMovie ;
 
     public partial class App : Application
     {
@@ -6,6 +8,6 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new InitialPage();
         }
     }
