@@ -17,5 +17,19 @@ namespace AsapMovie.Pages ;
             InitializeComponent();
             _dbContext = db;
             Task.Run(async()=> _movies = await _dbContext.GetMovies());
+
+            var selectCategoriesButton = new Button { Text = "Select Categories" };
+            selectCategoriesButton.Clicked += async (sender, args) =>
+            {
+                await Navigation.PushAsync(new SelectCategoriesPage());
+            };
+    
+            var categorizeMovie = new Button { Text = "Categorize Movie" };
+            categorizeMovie.Clicked += async (sender, args) =>
+            {
+                await Navigation.PushAsync(new MoviesToCategorize());
+            };
+
+            Content = new ScrollView { Content = new StackLayout { Spacing = 5, Children = {  selectCategoriesButton, categorizeMovie}} };
         }
     }
