@@ -4,7 +4,7 @@ namespace AsapMovie.Methods_and_Models ;
 
     public class DbContext
     {
-        private const string dbName = "local_db.db3";
+        private const string dbName = "local_database.db3";
         private readonly SQLiteAsyncConnection _connection;
         
         public DbContext()

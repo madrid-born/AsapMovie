@@ -40,14 +40,21 @@ namespace AsapMovie.Pages ;
             
             sl.Children.Add(executeButton);
 
-            var categories = Functions.GetCategories();
+            sl.Children.Add(CategoriesContent());
+            
+            Content = new ScrollView { Content = sl };
+        }
 
+        private StackLayout CategoriesContent()
+        {
+            var sl = new StackLayout { Spacing = 5 };
+            var categories = Functions.GetCategories();
             var vsl = new VerticalStackLayout { Spacing = 5 };
             sl.Add(vsl);
             foreach (var item in categories)
             {
+                
                 vsl.Children.Add(CategoryCheckBox(item));
-
             }
 
             var addNewCategoryButton = new Button { Text = "Add New Category" };
@@ -66,8 +73,7 @@ namespace AsapMovie.Pages ;
                 }
             }; 
             sl.Children.Add(addNewCategoryButton);
-            
-            Content = new ScrollView { Content = sl };
+            return sl;
         }
 
         private HorizontalStackLayout CategoryCheckBox(string item)

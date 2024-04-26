@@ -67,7 +67,20 @@ namespace AsapMovie.Methods_and_Models ;
                 
             }
             return allFiles;
-        } 
+        }
+
+        public static string SerializeCategories(List<string> categories )
+        {
+            return JsonSerializer.Serialize(categories);
+        }
+
+        public static byte[] SerializeImage(string pictureFilePath)
+        {
+            using var fs = new FileStream(pictureFilePath, FileMode.Open, FileAccess.Read);
+            using var br = new BinaryReader(fs);
+            var imageBytes = br.ReadBytes((int)fs.Length);
+            return imageBytes;
+        }
         
     }
     

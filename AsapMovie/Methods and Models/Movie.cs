@@ -1,4 +1,6 @@
 using System.Text.Json;
+using System.IO;
+
 using SQLite;
 
 namespace AsapMovie.Methods_and_Models ;
@@ -21,23 +23,12 @@ namespace AsapMovie.Methods_and_Models ;
         [Column("Categories")]
         public string Categories { get; set; }
         
-        // [Column("pic")]
-        // public string pic { get; set; }
+        [Column("Picture")]
+        public byte[] Picture { get; set; }
+        
 
-        // public Movie(string title, string address, string description, List<string> categories)
+        // private ImageSource LoadImage()
         // {
-        //     Title = title;
-        //     Address = address;
-        //     Description = description;
-        //     Categories = JsonSerializer.Serialize(categories);
+        //     return ImageSource.FromStream(() => new MemoryStream(Picture));
         // }
-        //
-        // public void AddCategory(string category)
-        // {
-        //     var categories = string.IsNullOrEmpty(Categories) ? new List<string>() : JsonSerializer.Deserialize<List<string>>(Categories);
-        //     categories.Add(category);
-        //     Categories = JsonSerializer.Serialize(categories);
-        // }
-        
-        
     }
