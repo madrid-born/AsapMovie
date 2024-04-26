@@ -17,17 +17,26 @@ namespace AsapMovie.Pages ;
             InitializeComponent();
             _dbContext = db;
             Task.Run(async()=> _movies = await _dbContext.GetMovies());
+        }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            FillTheFront();
+        }
+
+        private void FillTheFront()
+        {
             var selectCategoriesButton = new Button { Text = "Select Categories" };
             selectCategoriesButton.Clicked += async (sender, args) =>
             {
-                await Navigation.PushAsync(new SelectCategoriesPage());
+                await Navigation.PushAsync(new SelectCategoriesPage(_movies));
             };
     
             var categorizeMovie = new Button { Text = "Categorize Movie" };
             categorizeMovie.Clicked += async (sender, args) =>
             {
-                await Navigation.PushAsync(new MoviesToCategorize());
+                await Navigation.PushAsync(new MoviesToCategorizePage(_movies));
             };
 
             Content = new ScrollView { Content = new StackLayout { Spacing = 5, Children = {  selectCategoriesButton, categorizeMovie}} };
