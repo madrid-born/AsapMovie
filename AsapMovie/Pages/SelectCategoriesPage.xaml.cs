@@ -39,9 +39,8 @@ namespace AsapMovie.Pages ;
             };
             
             sl.Children.Add(executeButton);
-        
-            var categories = new List<string>();
-            // var categories = Functions.GetCategories();
+
+            var categories = Functions.GetCategories();
 
             var vsl = new VerticalStackLayout { Spacing = 5 };
             sl.Add(vsl);
@@ -57,6 +56,7 @@ namespace AsapMovie.Pages ;
                 var userInput = await Application.Current.MainPage.DisplayPromptAsync("Title", "Message", "OK", "Cancel", "Default text");
                 if (userInput != null)
                 {
+                    Functions.SetCategory(userInput);
                     vsl.Children.Add(CategoryCheckBox(userInput));
                     await DisplayAlert("Message", "Successfully added", "OK");
                 }
