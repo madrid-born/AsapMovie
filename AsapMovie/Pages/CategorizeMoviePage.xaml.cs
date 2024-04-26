@@ -8,8 +8,26 @@ namespace AsapMovie.Pages ;
 
     public partial class CategorizeMoviePage : ContentPage
     {
-        public CategorizeMoviePage()
+        private string _address;
+        public CategorizeMoviePage(string address)
         {
             InitializeComponent();
+            _address = address;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            FillTheFront();
+        }
+
+        private void FillTheFront()
+        {
+            var sl = new StackLayout { Spacing = 5};
+            
+            // TODO: get information
+            
+            
+            Content = new ScrollView { Content = sl};
         }
     }

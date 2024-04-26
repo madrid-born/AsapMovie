@@ -24,14 +24,14 @@ namespace AsapMovie.Methods_and_Models ;
         // [Column("pic")]
         // public string pic { get; set; }
 
-        public Movie(string title, string address, string description, List<string> categories)
-        {
-            Title = title;
-            Address = address;
-            Description = description;
-            Categories = JsonSerializer.Serialize(categories);
-        }
-        
+        // public Movie(string title, string address, string description, List<string> categories)
+        // {
+        //     Title = title;
+        //     Address = address;
+        //     Description = description;
+        //     Categories = JsonSerializer.Serialize(categories);
+        // }
+        //
         // public void AddCategory(string category)
         // {
         //     var categories = string.IsNullOrEmpty(Categories) ? new List<string>() : JsonSerializer.Deserialize<List<string>>(Categories);

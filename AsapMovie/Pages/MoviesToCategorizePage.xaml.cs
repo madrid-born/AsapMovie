@@ -9,9 +9,11 @@ namespace AsapMovie.Pages ;
 
     public partial class MoviesToCategorizePage : ContentPage
     {
+        private List<Movie> _movies;
         public MoviesToCategorizePage(List<Movie> movies)
         {
             InitializeComponent();
+            _movies = movies;
         }
 
         protected override void OnAppearing()
@@ -22,6 +24,21 @@ namespace AsapMovie.Pages ;
 
         private void FillTheFront()
         {
-            
+            var sl = new StackLayout { Spacing = 5 };
+            foreach (var address in Functions.AllMovies())
+            {
+                if (_movies.Any(movie => address == movie.Address))
+                {
+                    continue;
+                }
+                var button = new Button { Text = address  , BackgroundColor = Colors.Aqua};
+                button.Clicked += (sender, args) =>
+                {
+                    Navigation.PushAsync(new CategorizeMoviePage(address));
+                    button.BackgroundColor = Colors.Red;
+                };
+
+            }
+            Content = new ScrollView { Content = sl};
         }
     }
