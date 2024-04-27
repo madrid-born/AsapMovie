@@ -26,7 +26,7 @@ namespace AsapMovie.Methods_and_Models ;
         [Column("Picture")]
         public byte[] Picture { get; set; }
         
-        public List<string> ShowCategories()
+        public List<string> GetCategories()
         {
             return Categories is "" ? new List<string>() : JsonSerializer.Deserialize<List<string>>(Categories);;
         }

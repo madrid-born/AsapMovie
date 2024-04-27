@@ -29,7 +29,7 @@ namespace AsapMovie.Pages ;
         {
             var sl = new StackLayout { Margin = 10, Spacing = 5};
 
-            var titleEntry = new Entry { Text = Functions.MovieTitle(_address)};
+            var titleEntry = new Entry { Text = Functions.MovieTitle(Functions.ExtractTitle(_address))};
             sl.Add(titleEntry);
             
             var textPath = Path.Combine(@"D:\Movies and Series\Movies\Project\Details",
@@ -55,6 +55,7 @@ namespace AsapMovie.Pages ;
                     });
             
                     if (result == null) return;
+                    pictureButton.Text = Functions.MovieTitle(result.FullPath);
                     picturePath = result.FullPath;
                 }
                 catch (Exception ex)
@@ -76,7 +77,9 @@ namespace AsapMovie.Pages ;
                     var image = Functions.SerializeAndResizeImage(picturePath);
                     var categories = Functions.SerializeCategories(_checkedList);
                     var movie = new Movie { Title = title, Description = description, Address = _address, Categories = categories, Picture = image};
-                    _dbContext.Create(movie);
+                    await _dbContext.Create(movie);
+                    await Navigation.PopAsync();
+                    await DisplayAlert("Message", "Added Successfully", "OK");
                 }
                 catch (Exception e)
                 {
@@ -149,25 +152,4 @@ namespace AsapMovie.Pages ;
             hsl.Children.Add(label);
             return hsl;
         }
-        
-        // selectFileButton.Clicked += async (sender, e) =>
-        // {
-        //     try
-        //     {
-        //         var result = await FilePicker.PickAsync(new PickOptions
-        //         {
-        //             PickerTitle = "Select a file"
-        //         });
-        //
-        //         if (result == null) return;
-        //         var selectedFilePath = result.FullPath;
-        //         var items = Reader(selectedFilePath);
-        //         GoToNextPage(items);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         await DisplayAlert("Error", $"Error selecting file: {ex.Message}", "OK");
-        //     }
-        // };
-
     }

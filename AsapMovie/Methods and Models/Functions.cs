@@ -1,5 +1,10 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System;
+using System.IO;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace AsapMovie.Methods_and_Models ;
 
@@ -9,7 +14,6 @@ namespace AsapMovie.Methods_and_Models ;
         {
             var jsonString = Preferences.Get("Categories", "");
             var categories = jsonString is "" ? new List<string>() : JsonSerializer.Deserialize<List<string>>(jsonString);
-            categories.Sort();
             return categories;
         }
         
@@ -31,6 +35,11 @@ namespace AsapMovie.Methods_and_Models ;
             Preferences.Set("Categories", jsonString);
         }
         
+        public static void RemoveAllCategories()
+        {
+            Preferences.Set("Categories", "");
+        }
+        
         
         public static string MovieTitle(string input)
         {
@@ -47,6 +56,7 @@ namespace AsapMovie.Methods_and_Models ;
                 string title = match.Groups[1].Value.Trim() + " " + match.Groups[2].Value;
                 return title;
             }
+            input = input.Replace(".", " ");
             return input;
             
         }
@@ -74,102 +84,12 @@ namespace AsapMovie.Methods_and_Models ;
             return JsonSerializer.Serialize(categories);
         }
 
-        public static byte[] SerializeImage(string pictureFilePath)
+        public static byte[] SerializeAndResizeImage(string pictureFilePath)
         {
-            using var fs = new FileStream(pictureFilePath, FileMode.Open, FileAccess.Read);
-            using var br = new BinaryReader(fs);
-            var imageBytes = br.ReadBytes((int)fs.Length);
-            return imageBytes;
+            using var image = Image.Load(pictureFilePath);
+            image.Mutate(x => x.Resize(200, 300));
+            using var memoryStream = new MemoryStream();
+            image.SaveAsJpeg(memoryStream);
+            return memoryStream.ToArray();
         }
-        
     }
-    
-           // private void OpenFolder(string filePath)
-        // {
-        //     try
-        //     {
-        //         Process.Start(new ProcessStartInfo
-        //         {
-        //             FileName = "explorer.exe",
-        //             Arguments = $"/select,\"{filePath}\""
-        //         });
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Handle error
-        //         Console.WriteLine($"Error opening file location: {ex.Message}");
-        //     }
-        // }
-    
-    
-    // public partial class newPage : ContentPage
-    // {
-    //     public newPage()
-    //     {
-    //         InitializeComponent();
-    //
-    //         var sl = new StackLayout{Margin = 20 , Spacing = 5};
-    //
-    //         foreach (var movie in Functions.AllMovies())
-    //         {
-    //             var explorerButton = new Button { Text = "Open" };
-    //             explorerButton.Clicked += (sender, args) =>
-    //             {
-    //                 OpenFolder(movie);
-    //             };
-    //             
-    //             var label = new Label { TextColor = Colors.Black ,Text = Functions.MovieTitle(movie) };
-    //             
-    //             var copyButton = new Button { Text = "Copy" };
-    //             copyButton.Clicked += async (sender, args) =>
-    //             {
-    //                 await Clipboard.SetTextAsync(Functions.ExtractTitle(Functions.MovieTitle(movie)));
-    //             };
-    //
-    //             var detailEntry = new Entry { Placeholder = "description" };
-    //
-    //             var submitButton = new Button { Text = "Submit"};
-    //             submitButton.Clicked += async (sender, args) =>
-    //             {
-    //                 try
-    //                 {
-    //                     AddDescription(Functions.MovieTitle(movie), detailEntry.Text);
-    //                     await DisplayAlert("Congrats", "Added", "Done");
-    //                 }
-    //                 catch (Exception e)
-    //                 {
-    //                     await DisplayAlert("Congrats", e.Message, "Done");
-    //                 }
-    //             };
-    //
-    //             var hsl = new HorizontalStackLayout { HorizontalOptions = LayoutOptions.Center, Children = { explorerButton, copyButton, submitButton } };
-    //             var vsl = new VerticalStackLayout  { BackgroundColor = Colors.Aqua ,Children = {label, detailEntry, hsl }};
-    //             sl.Children.Add(vsl);
-    //         }
-    //         Content = new ScrollView { Content = sl};
-    //     }
-    //
-    //     public void AddDescription(string title, string description)
-    //     {
-    //         string directoryPath = @"D:\Movies and Series\Movies\Project\Details";
-    //         string filePath = Path.Combine(directoryPath, $"{title}.txt");
-    //
-    //         File.WriteAllText(filePath, description);
-    //     }
-    //     
-    //     private void OpenFolder(string filePath)
-    //     {
-    //         try
-    //         {
-    //             Process.Start(new ProcessStartInfo
-    //             {
-    //                 FileName = "explorer.exe",
-    //                 Arguments = $"/select,\"{filePath}\""
-    //             });
-    //         }
-    //         catch (Exception ex)
-    //         {
-    //             Console.WriteLine($"Error opening file location: {ex.Message}");
-    //         }
-    //     }
-    // }

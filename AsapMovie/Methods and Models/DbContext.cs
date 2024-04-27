@@ -4,12 +4,12 @@ namespace AsapMovie.Methods_and_Models ;
 
     public class DbContext
     {
-        private const string dbName = "local_database.db3";
+        private const string DbName = "Database.db3";
         private readonly SQLiteAsyncConnection _connection;
         
         public DbContext()
         {
-            _connection = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, dbName));
+            _connection = new SQLiteAsyncConnection(Path.Combine(@"D:\Movies and Series\Movies", DbName));
             _connection.CreateTableAsync<Movie>();
         }
 

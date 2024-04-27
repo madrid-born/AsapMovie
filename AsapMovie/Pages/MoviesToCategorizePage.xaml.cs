@@ -29,18 +29,13 @@ namespace AsapMovie.Pages ;
             var sl = new StackLayout { Spacing = 5 };
             foreach (var address in Functions.AllMovies())
             {
-                // if (_movies.Any(movie => address == movie.Address))
-                // {
-                //     continue;
-                // }
+                if (_movies.Any(movie => movie.Address == address)) continue;
                 var button = new Button { Text = address  , BackgroundColor = Colors.Aqua};
                 button.Clicked += (sender, args) =>
                 {
                     Navigation.PushAsync(new CategorizeMoviePage(_dbContext, address));
-                    button.BackgroundColor = Colors.Red;
                 };
                 sl.Children.Add(button);
-
             }
             Content = new ScrollView { Content = sl};
         }

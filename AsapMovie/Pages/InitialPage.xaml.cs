@@ -38,7 +38,7 @@ namespace AsapMovie.Pages ;
             {
                 await Navigation.PushAsync(new MoviesToCategorizePage(_dbContext));
             };
-
+            
             Content = new ScrollView { Content = new StackLayout { VerticalOptions = LayoutOptions.Center, Spacing = 5, Children = {  selectCategoriesButton, categorizeMovie}} };
         }
     }
