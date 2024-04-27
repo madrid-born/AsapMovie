@@ -10,12 +10,12 @@ namespace AsapMovie.Pages ;
     public partial class SelectCategoriesPage : ContentPage
     {
         private List<string> _checkedList = new ();
-        private List<Movie> _movies;
+        private readonly DbContext _dbContext;
 
-        public SelectCategoriesPage(List<Movie> movies)
+        public SelectCategoriesPage(DbContext dbContext)
         {
             InitializeComponent();
-            _movies = movies;
+            _dbContext = dbContext;
         }
         
         protected override void OnAppearing()
@@ -35,7 +35,7 @@ namespace AsapMovie.Pages ;
             };
             executeButton.Clicked += async (sender, args) =>
             {
-                await Navigation.PushAsync(new ShowMoviesInCategoriesPage(_movies, _checkedList));
+                await Navigation.PushAsync(new ShowMoviesInCategoriesPage(_dbContext, _checkedList));
             };
             
             sl.Children.Add(executeButton);

@@ -9,9 +9,9 @@ namespace AsapMovie.Pages ;
 
     public partial class CategorizeMoviePage : ContentPage
     {
-        private string _address;
         private List<string> _checkedList = new ();
-        private DbContext _dbContext;
+        private string _address;
+        private readonly DbContext _dbContext;
         public CategorizeMoviePage(DbContext dbContext, string address)
         {
             InitializeComponent();
@@ -73,7 +73,7 @@ namespace AsapMovie.Pages ;
                 {
                     var title = titleEntry.Text;
                     var description = descriptionEntry.Text;
-                    var image = Functions.SerializeImage(picturePath);
+                    var image = Functions.SerializeAndResizeImage(picturePath);
                     var categories = Functions.SerializeCategories(_checkedList);
                     var movie = new Movie { Title = title, Description = description, Address = _address, Categories = categories, Picture = image};
                     _dbContext.Create(movie);

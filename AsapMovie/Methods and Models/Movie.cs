@@ -26,9 +26,13 @@ namespace AsapMovie.Methods_and_Models ;
         [Column("Picture")]
         public byte[] Picture { get; set; }
         
-
-        // private ImageSource LoadImage()
-        // {
-        //     return ImageSource.FromStream(() => new MemoryStream(Picture));
-        // }
+        public List<string> ShowCategories()
+        {
+            return Categories is "" ? new List<string>() : JsonSerializer.Deserialize<List<string>>(Categories);;
+        }
+        
+        public ImageSource LoadImage()
+        {
+            return ImageSource.FromStream(() => new MemoryStream(Picture));
+        }
     }

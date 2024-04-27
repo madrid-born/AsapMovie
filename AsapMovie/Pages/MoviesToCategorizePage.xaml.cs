@@ -10,11 +10,11 @@ namespace AsapMovie.Pages ;
     public partial class MoviesToCategorizePage : ContentPage
     {
         private List<Movie> _movies;
-        private DbContext _dbContext;
-        public MoviesToCategorizePage(DbContext dbContext, List<Movie> movies)
+        private readonly DbContext _dbContext;
+        public MoviesToCategorizePage(DbContext dbContext)
         {
             InitializeComponent();
-            _movies = movies;
+            Task.Run(async()=> _movies = await _dbContext.GetMovies());
             _dbContext = dbContext;
         }
 
