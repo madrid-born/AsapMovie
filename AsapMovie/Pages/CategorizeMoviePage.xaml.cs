@@ -29,18 +29,10 @@ namespace AsapMovie.Pages ;
         {
             var sl = new StackLayout { Margin = 10, Spacing = 5};
 
-            var titleEntry = new Entry { Text = Functions.ExtractTitle(Functions.MovieTitle(_address))};
+            var titleEntry = new Entry { Text = ""};
             sl.Add(titleEntry);
-            
-            var textPath = Path.Combine(@"D:\Movies and Series\Movies\Project\Details",
-                Functions.MovieTitle(_address) + ".txt");
-            var fileContent = "";
-            if (File.Exists(textPath))
-            {
-                using var sr = new StreamReader(textPath);
-                fileContent = sr.ReadToEnd();
-            }
-            var descriptionEntry = new Entry { Text = fileContent };
+
+            var descriptionEntry = new Entry { Text = "" };
             sl.Children.Add(descriptionEntry);
 
             var picturePath = "";
