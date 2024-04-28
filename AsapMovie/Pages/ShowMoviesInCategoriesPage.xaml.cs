@@ -37,22 +37,30 @@ namespace AsapMovie.Pages ;
 
         private Grid MovieLayout(Movie movie)
         {
-            var grid = new Grid { BackgroundColor = Colors.Aqua, ColumnSpacing = 10, Margin = 10};
+            var grid = new Grid { BackgroundColor = Colors.Wheat, ColumnSpacing = 10, Margin = 10};
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 
-            var image = new Image { Source = movie.LoadImage() , HeightRequest = 300, WidthRequest = 200};
+            var image = new Image { Source = movie.LoadImage() , HeightRequest = 300, WidthRequest = 200, Margin = 10};
             grid.Children.Add(image);
             grid.SetColumn(image, 0);
+            
+            var insideGrid = new Grid { Margin = 10};
+            insideGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            insideGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
 
-            var titleLabel = new Label { Text = movie.Title, HorizontalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.Start};
-            var descriptionLabel = new Label { Text = movie.Description, HorizontalTextAlignment = TextAlignment.Center ,LineBreakMode = LineBreakMode.CharacterWrap};
-            var vsl1 = new VerticalStackLayout { Spacing = 5 , VerticalOptions = LayoutOptions.Center ,Children = { titleLabel, descriptionLabel }};
-            grid.Children.Add(vsl1);
-            grid.SetColumn(vsl1, 1);
+            var titleLabel = new Label { Text = movie.Title, HorizontalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.Start, FontSize = 60, TextColor = Colors.Black};
+            insideGrid.Children.Add(titleLabel);
+            insideGrid.SetRow(titleLabel, 0);
+            var descriptionLabel = new Label { Text = movie.Description, HorizontalTextAlignment = TextAlignment.Center , VerticalOptions = LayoutOptions.Center, TextColor = Colors.Black ,LineBreakMode = LineBreakMode.CharacterWrap};
+            insideGrid.Children.Add(descriptionLabel);
+            insideGrid.SetRow(descriptionLabel, 1);
+            
+            grid.Children.Add(insideGrid);
+            grid.SetColumn(insideGrid, 1);
 
-            var openButton = new Button { Text = "Open File"};
+            var openButton = new Button { Text = "Open File", Margin = 10};
             openButton.Clicked += async (sender, args) =>
             {
                 try

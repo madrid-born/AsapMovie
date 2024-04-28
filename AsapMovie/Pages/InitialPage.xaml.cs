@@ -27,18 +27,18 @@ namespace AsapMovie.Pages ;
 
         private void FillTheFront()
         {
-            var selectCategoriesButton = new Button { Text = "Select Categories" };
+            var selectCategoriesButton = new Button { Text = "Select Categories", HeightRequest = 100};
             selectCategoriesButton.Clicked += async (sender, args) =>
             {
                 await Navigation.PushAsync(new SelectCategoriesPage(_movies));
             };
     
-            var categorizeMovie = new Button { Text = "Categorize Movie" };
+            var categorizeMovie = new Button { Text = "Categorize Movie", HeightRequest = 100};
             categorizeMovie.Clicked += async (sender, args) =>
             {
                 await Navigation.PushAsync(new MoviesToCategorizePage(_dbContext, _movies));
             };
             
-            Content = new ScrollView { Content = new StackLayout { VerticalOptions = LayoutOptions.Center, Spacing = 5, Children = {  selectCategoriesButton, categorizeMovie}} };
+            Content = new ScrollView { Content = new StackLayout { VerticalOptions = LayoutOptions.Center, Spacing = 50, Margin = 50, Children = {  selectCategoriesButton, categorizeMovie}} };
         }
     }
