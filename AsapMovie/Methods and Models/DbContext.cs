@@ -18,6 +18,7 @@ namespace AsapMovie.Methods_and_Models ;
             return await _connection.Table<Movie>().ToListAsync();
         }
 
+
         public async Task<Movie> GetById(int id)
         {
             return await _connection.Table<Movie>().Where(x => x.id == id).FirstOrDefaultAsync();

@@ -10,15 +10,13 @@ namespace AsapMovie.Pages ;
 
     public partial class ShowMoviesInCategoriesPage : ContentPage
     {
-        private List<string> _categories;
-        private List<Movie> _movies;
-        private readonly DbContext _dbContext;
-        public ShowMoviesInCategoriesPage(DbContext dbContext, List<string> categories)
+        private readonly List<string> _categories;
+        private readonly List<Movie> _movies;
+        public ShowMoviesInCategoriesPage(List<Movie> movies, List<string> categories)
         {
             InitializeComponent();
+            _movies = movies;
             _categories = categories;
-            Task.Run(async()=> _movies = await _dbContext.GetMovies());
-            _dbContext = dbContext;
         }
         
         protected override void OnAppearing()
@@ -30,7 +28,6 @@ namespace AsapMovie.Pages ;
         private void FillTheFront()
         {
             var sl = new StackLayout { Spacing = 5 , Margin = 10};
-
             foreach (var movie in _movies.Where(movie => _categories.All(item => movie.GetCategories().Contains(item))))
             {
                 sl.Children.Add(MovieLayout(movie));

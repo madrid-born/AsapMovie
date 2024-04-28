@@ -9,13 +9,13 @@ namespace AsapMovie.Pages ;
 
     public partial class MoviesToCategorizePage : ContentPage
     {
-        private List<Movie> _movies;
+        private readonly List<Movie> _movies;
         private readonly DbContext _dbContext;
-        public MoviesToCategorizePage(DbContext dbContext)
+        public MoviesToCategorizePage(DbContext dbContext, List<Movie> movies)
         {
             InitializeComponent();
-            Task.Run(async()=> _movies = await _dbContext.GetMovies());
             _dbContext = dbContext;
+            _movies = movies;
         }
 
         protected override void OnAppearing()

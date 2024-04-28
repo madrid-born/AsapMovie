@@ -29,7 +29,7 @@ namespace AsapMovie.Pages ;
         {
             var sl = new StackLayout { Margin = 10, Spacing = 5};
 
-            var titleEntry = new Entry { Text = Functions.MovieTitle(Functions.ExtractTitle(_address))};
+            var titleEntry = new Entry { Text = Functions.ExtractTitle(Functions.MovieTitle(_address))};
             sl.Add(titleEntry);
             
             var textPath = Path.Combine(@"D:\Movies and Series\Movies\Project\Details",

@@ -30,13 +30,13 @@ namespace AsapMovie.Pages ;
             var selectCategoriesButton = new Button { Text = "Select Categories" };
             selectCategoriesButton.Clicked += async (sender, args) =>
             {
-                await Navigation.PushAsync(new SelectCategoriesPage(_dbContext));
+                await Navigation.PushAsync(new SelectCategoriesPage(_movies));
             };
     
             var categorizeMovie = new Button { Text = "Categorize Movie" };
             categorizeMovie.Clicked += async (sender, args) =>
             {
-                await Navigation.PushAsync(new MoviesToCategorizePage(_dbContext));
+                await Navigation.PushAsync(new MoviesToCategorizePage(_dbContext, _movies));
             };
             
             Content = new ScrollView { Content = new StackLayout { VerticalOptions = LayoutOptions.Center, Spacing = 5, Children = {  selectCategoriesButton, categorizeMovie}} };
